@@ -1,0 +1,241 @@
+/* Header Styling */
+.header {
+    text-align: center; /* Center the text */
+    padding: 20px 0; /* Add padding for better spacing */
+    width: 100%; /* Ensure it spans the full width */
+    position: fixed; /* Fix the header at the top */
+    top: 0; /* Position at the top of the screen */
+    left: 0; /* Align to the left edge */
+    background: rgba(0, 0, 0, 0.5); /* Optional: Add a background for better visibility */
+    z-index: 1000; /* Ensure the header stays above other content */
+}
+
+.header-title {
+    font-size: 48px; /* Larger font size for the main title */
+    font-weight: bold;
+    color: rgb(247, 239, 239); /* Match the existing color scheme */
+    margin: 0; /* Remove default margin */
+}
+
+.header-subtitle {
+    font-size: 24px; /* Smaller font size for the subtitle */
+    color: rgba(247, 239, 239, 0.8); /* Slightly transparent for a subtle effect */
+    margin: 0; /* Remove default margin */
+}
+
+/* Reset and General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column; /* Stack header and container vertically */
+    justify-content: center; /* Center the container vertically */
+    align-items: center; /* Center the container horizontally */
+    background: url('background.webp') no-repeat center center fixed;
+    overflow: hidden; /* Prevents scrollbars */
+    background-size: cover;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribute space between items */
+    width: 100vw;
+    padding: 10px;
+    margin-top: 120px; /* Add margin to avoid overlap with the fixed header */
+
+}
+
+
+/* Microphone Button */
+.microphone-button {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: url("/static/microphone.png") no-repeat center center;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0px rgb(204, 255, 0); /* Initially no glow */
+    margin-left: 2cm; /* 2cm margin on the left */
+}
+
+.microphone-button:hover {
+    transform: scale(1.1);
+}
+
+.microphone-button:active {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Glowing Effect When Recording */
+.microphone-button.recording {
+    animation: glowEffect 1s infinite alternate ease-in-out;
+}
+
+/* Glow Animation */
+@keyframes glowEffect {
+    0% {
+        box-shadow: 0 0 10px rgba(208, 255, 0, 0.937);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(208, 255, 0, 0.937);
+    }
+}
+
+
+/* Wave Animation Container */
+.wave-container {
+    display: none; /* Hidden by default */
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-grow: 1; /* Allow wave animation to take up available space */
+    margin: 0 2cm; /* 2cm margin on both sides */
+}
+
+/* Show when active */
+.wave-container.active {
+    display: flex;
+}
+
+/* Animated wave effect */
+.wave-bar {
+    width: 8px;
+    height: 20px;
+    background-color: white;
+    border-radius: 5px;
+    animation: waveAnimation 1.2s infinite ease-in-out;
+}
+
+.wave-bar:nth-child(1) { animation-delay: 0s; }
+.wave-bar:nth-child(2) { animation-delay: 0.2s; }
+.wave-bar:nth-child(3) { animation-delay: 0.4s; }
+.wave-bar:nth-child(4) { animation-delay: 0.6s; }
+.wave-bar:nth-child(5) { animation-delay: 0.8s; }
+.wave-bar:nth-child(6) { animation-delay: 0.8s; }
+.wave-bar:nth-child(7) { animation-delay: 0.10s; }
+.wave-bar:nth-child(8) { animation-delay: 0s; }
+.wave-bar:nth-child(9) { animation-delay: 0.2s; }
+.wave-bar:nth-child(10) { animation-delay: 0.4s; }
+.wave-bar:nth-child(11) { animation-delay: 0.6s; }
+.wave-bar:nth-child(12) { animation-delay: 0.8s; }
+.wave-bar:nth-child(13) { animation-delay: 0.10s; }
+.wave-bar:nth-child(14) { animation-delay: 0s; }
+.wave-bar:nth-child(15) { animation-delay: 0.2s; }
+.wave-bar:nth-child(16) { animation-delay: 0.4s; }
+.wave-bar:nth-child(17) { animation-delay: 0.6s; }
+.wave-bar:nth-child(18) { animation-delay: 0.8s; }
+.wave-bar:nth-child(19) { animation-delay: 0.10s; }
+.wave-bar:nth-child(20) { animation-delay: 0s; }
+.wave-bar:nth-child(21) { animation-delay: 0.2s; }
+.wave-bar:nth-child(22) { animation-delay: 0.4s; }
+.wave-bar:nth-child(23) { animation-delay: 0.6s; }
+.wave-bar:nth-child(24) { animation-delay: 0.8s; }
+.wave-bar:nth-child(25) { animation-delay: 0.10s; }
+.wave-bar:nth-child(26) { animation-delay: 0s; }
+.wave-bar:nth-child(27) { animation-delay: 0.2s; }
+.wave-bar:nth-child(28) { animation-delay: 0.4s; }
+.wave-bar:nth-child(29) { animation-delay: 0.6s; }
+.wave-bar:nth-child(30) { animation-delay: 0.8s; }
+.wave-bar:nth-child(31) { animation-delay: 0.10s; }
+.wave-bar:nth-child(32) { animation-delay: 0s; }
+.wave-bar:nth-child(33) { animation-delay: 0.2s; }
+.wave-bar:nth-child(34) { animation-delay: 0.4s; }
+.wave-bar:nth-child(35) { animation-delay: 0.6s; }
+.wave-bar:nth-child(36) { animation-delay: 0.8s; }
+.wave-bar:nth-child(37) { animation-delay: 0.8s; }
+.wave-bar:nth-child(38) { animation-delay: 0.10s; }
+.wave-bar:nth-child(39) { animation-delay: 0s; }
+.wave-bar:nth-child(40) { animation-delay: 0.2s; }
+
+
+
+@keyframes waveAnimation {
+    0%, 100% { height: 20px; opacity: 0.7; }
+    50% { height: 50px; opacity: 1; }
+}
+
+/* Whiteboard Section */
+.whiteboard-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 500px;
+    margin-right: 2cm; /* 2cm margin on the right */
+}
+
+.whiteboard-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(247, 239, 239);
+    margin-bottom: 10px;
+}
+
+.whiteboard {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgba(255, 255, 255, 1);
+    padding: 15px;
+    min-height: 500px;
+    min-width: 450px;
+    text-align: left;
+    font-size: 16px;
+    color: rgb(6, 0, 0);
+    overflow-y: auto;
+    max-height: 250px;
+    transition: border-color 0.3s ease;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.content {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 95%;
+    }
+}
+
+/* Responsive Fix for Smaller Screens */
+@media (max-width: 1366px) {
+    .container {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .microphone-button {
+        width: 100px;
+        height: 100px;
+    }
+
+    .wave-container {
+        width: 160px;
+        height: 60px;
+    }
+
+    .whiteboard-container {
+        width: 100%;
+        max-width: 600px;
+        padding: 0;
+        margin-top: 20px;
+    }
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Text Whiteboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="header-title">EchoBoard</h1>
+        <p class="header-subtitle">Your Speech, Your Words</p>
+    </header>
+    
+    <div class="container">
+        <!-- Microphone Button (Left Side) -->
+        <button id="start-recording" class="microphone-button"></button>
+
+        <!-- Wave Animation (Middle) -->
+        <div id="wave-animation" class="wave-container">
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+            <span class="wave-bar"></span>
+
+        </div>
+
+        <!-- Whiteboard (Right Side) -->
+        <div class="whiteboard-container">
+            <h2 class="whiteboard-title">Transcribed Text</h2>
+            <div id="whiteboard" class="whiteboard"></div>
+        </div>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+
+        document.getElementById('start-recording').addEventListener('click', () => {
+            if (!isRecording) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        });
+
+        function startRecording() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+                    isRecording = true;
+
+                    // Add glow effect to microphone button
+                    document.getElementById('start-recording').classList.add('recording');
+
+                    // Show wave animation when recording starts
+                    document.getElementById('wave-animation').classList.add('active');
+
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const formData = new FormData();
+                        formData.append('audio', audioBlob, 'recording.wav');
+
+                        fetch('/speech-to-text', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Transcribed Data:", data);
+                            if (data.text) {
+                                document.getElementById('whiteboard').textContent += data.text + ' ';
+                            } else {
+                                document.getElementById('whiteboard').textContent += 'Error: ' + data.error;
+                            }
+
+                            // Hide wave animation AFTER transcription appears
+                            document.getElementById('wave-animation').classList.remove('active');
+
+                            // Remove glow effect after transcription
+                            document.getElementById('start-recording').classList.remove('recording');
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            document.getElementById('wave-animation').classList.remove('active');
+                        });
+
+                        audioChunks = [];
+                    };
+                })
+                .catch(error => console.error("Microphone access denied:", error));
+        }
+
+        function stopRecording() {
+            mediaRecorder.stop();
+            isRecording = false;
+
+            // Remove glow effect immediately after stopping
+            document.getElementById('start-recording').classList.remove('recording');
+        }
+    </script>
+</body>
+</html>
